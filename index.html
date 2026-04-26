@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title id="pageTitle">Remote Work Opportunities</title>
+</head>
+<body class="font-sans text-white relative">
+
+    <div class="fixed inset-0 z-[-2] overflow-hidden">
+        <img src="https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?q=80&w=2574&auto=format&fit=crop" 
+             alt="Paris Background" 
+             class="absolute w-full h-full object-cover">
+    </div>
+
+    <div class="fixed inset-0 z-[-1] bg-black/60"></div>
+
+    <div class="p-4 flex justify-end relative z-10">
+        <button onclick="toggleLang()" class="bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded font-bold shadow hover:bg-white/30 transition">AR / EN</button>
+    </div>
+
+    <div class="flex flex-col items-center justify-center min-h-screen text-center p-6 relative z-10">
+        <h1 id="headline" class="text-5xl font-bold mb-4 drop-shadow-lg">Start Your Freelancing Journey</h1>
+        <p id="subheadline" class="text-xl mb-8 max-w-lg drop-shadow-md">Access professional platforms and resources to build your career in the digital world. Explore the latest opportunities for remote work and skill development.</p>
+        
+        <a href="https://www.marginboats.guru/?sl=6094565-bc654" 
+           id="ctaButton"
+           class="bg-indigo-600 text-white text-xl font-semibold px-8 py-4 rounded-lg shadow-lg hover:bg-indigo-700 transition transform hover:scale-105 duration-300">
+           Get Started
+        </a>
+    </div>
+
+    <script>
+        const content = {
+            en: { 
+                title: "Remote Work Opportunities", 
+                headline: "Start Your Freelancing Journey", 
+                subheadline: "Access professional platforms and resources to build your career in the digital world. Explore the latest opportunities for remote work and skill development.", 
+                cta: "Get Started" 
+            },
+            ar: { 
+                title: "فرص العمل عن بعد", 
+                headline: "ابدأ رحلتك في العمل الحر", 
+                subheadline: "احصل على منصات وموارد احترافية لبناء مسيرتك المهنية في العالم الرقمي. استكشف أحدث الفرص للعمل عن بعد وتطوير مهاراتك.", 
+                cta: "ابدأ الآن" 
+            }
+        };
+
+        function toggleLang() {
+            const headlineElement = document.getElementById('headline');
+            const isEn = headlineElement.innerText.includes('Start Your');
+            const lang = isEn ? 'ar' : 'en';
+            
+            document.getElementById('pageTitle').innerText = content[lang].title;
+            headlineElement.innerText = content[lang].headline;
+            document.getElementById('subheadline').innerText = content[lang].subheadline;
+            document.getElementById('ctaButton').innerText = content[lang].cta;
+
+            // تغيير اتجاه النص حسب اللغة
+            if (lang === 'ar') {
+                document.documentElement.dir = 'rtl';
+                document.documentElement.lang = 'ar';
+            } else {
+                document.documentElement.dir = 'ltr';
+                document.documentElement.lang = 'en';
+            }
+        }
+    </script>
+</body>
+</html>
