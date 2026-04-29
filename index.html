@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="htmlTag">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Almaz Glass Casino</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1877237202544525" crossorigin="anonymous"></script>
+    <style>
+        .glass-panel { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        @keyframes roll { 0% { transform: translateY(0); } 50% { transform: translateY(-100%); } 51% { transform: translateY(100%); } 100% { transform: translateY(0); } }
+        .rolling { animation: roll 0.2s linear infinite; }
+        .box { background: rgba(0, 0, 0, 0.3); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; border-radius: 1rem; border: 1px solid rgba(255,255,255,0.1); height: 70px; overflow: hidden; }
+        .target-box { border-color: #f59e0b; color: #f59e0b; }
+    </style>
+</head>
+<body class="bg-slate-950 min-h-screen flex flex-col items-center justify-center p-4">
+
+    <div class="glass-panel w-full max-w-md p-6 rounded-3xl shadow-2xl text-white">
+        <div class="flex justify-between items-center mb-6">
+            <button onclick="toggleLang()" class="bg-white/10 px-3 py-1 rounded-lg text-xs hover:bg-white/20 transition">EN / AR</button>
+            <div id="balance" class="text-yellow-400 font-bold text-lg">0 💎 ($0.00)</div>
+        </div>
+        <h2 id="target-title" class="text-slate-400 text-xs uppercase tracking-widest mb-2 text-center">الأرقام المطلوبة</h2>
+        <div class="grid grid-cols-4 gap-2 mb-6">
+            <div id="t-0" class="box target-box">?</div>
+            <div id="t-1" class="box target-box">?</div>
+            <div id="t-2" class="box target-box">?</div>
+            <div id="t-3" class="box target-box">?</div>
+        </div>
+        <div class="grid grid-cols-4 gap-2 mb-6">
+            <div id="b-0" class="box">0</div>
+            <div id="b-1" class="box">0</div>
+            <div id="b-2" class="box">0</div>
+            <div id="b-3" class="box">0</div>
+        </div>
+        <div id="msg" class="text-center font-bold mb-4 h-6 text-sm"></div>
+        <button id="spinBtn" class="w-full bg-indigo-600 hover:bg-indigo-500 py-3 rounded-xl font-bold transition-all active:scale-95 shadow-lg">ابدأ الدوران</button>
+    </div>
+
+    <div class="mt-8 w-full max-w-md">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-1877237202544525"
+             data-ad-slot="6578690719"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+    <script>
+        const audio = {
+            bg: new Audio('sounds/bg-music.mp3'),
+            spin: new Audio('sounds/spin-roll.mp3'),
+            win: new Audio('sounds/win-jingle.mp3'),
+            lose: new Audio('sounds/lose-buzzer.mp3'),
+            coins: new Audio('sounds/coins-add.mp3'),
+            click: new Audio('sounds/ui-click.mp3')
+        };
+        audio.bg.loop = true; audio.bg.volume = 0.2;
+
+        const state = { jewels: 0, losses: 0, lang: 'ar', isSpinning: false };
+
+        function toggleLang() {
+            state.lang = state.lang === 'ar' ? 'en' : 'ar';
+            document.getElementById('htmlTag').dir = state.lang === 'ar' ? 'rtl' : 'ltr';
+            document.getElementById('spinBtn').innerText = state.lang === 'ar' ? 'ابدأ الدوران' : 'Start Spin';
+            document.getElementById('target-title').innerText = state.lang === 'ar' ? 'الأرقام المطلوبة' : 'Target Numbers';
+        }
+
+        async function startSpin() {
+            if (state.isSpinning) return;
+            state.isSpinning = true;
+            audio.click.play();
+            audio.bg.play();
+            document.getElementById('spinBtn').disabled = true;
+            document.getElementById('msg').innerText = "";
+            const target = Array.from({length: 4}, () => Math.floor(Math.random() * 9));
+            target.forEach((n, i) => document.getElementById(`t-${i}`).innerText = n);
+            const boxes = [0,1,2,3].map(i => document.getElementById(`b-${i}`));
+            boxes.forEach(b => b.classList.add('rolling'));
+            audio.spin.play();
+            await new Promise(r => setTimeout(r, 2000));
+            audio.spin.pause(); audio.spin.currentTime = 0;
+            state.losses++;
+            const isWin = (state.losses >= 3) ? (state.losses = 0, true) : (Math.random() < 0.25);
+            boxes.forEach((b, i) => {
+                b.classList.remove('rolling');
+                b.innerText = isWin ? target[i] : Math.floor(Math.random() * 9);
+                b.style.borderColor = isWin ? '#22c55e' : '#ef4444';
+            });
+            if (isWin) {
+                state.jewels++;
+                audio.win.play(); audio.coins.play();
+                document.getElementById('balance').innerText = `${state.jewels} 💎 ($${(state.jewels * 0.05).toFixed(2)})`;
+                document.getElementById('msg').innerText = state.lang === 'ar' ? "🎉 مبروك!" : "🎉 You Won!";
+            } else {
+                audio.lose.play();
+                document.getElementById('msg').innerText = state.lang === 'ar' ? "❌ خسرت" : "❌ You Lost";
+            }
+            state.isSpinning = false;
+            document.getElementById('spinBtn').disabled = false;
+        }
+
+        document.getElementById('spinBtn').addEventListener('click', startSpin);
+    </script>
+</body>
+</html>
