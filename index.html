@@ -1,41 +1,45 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" id="htmlTag">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Almaz - منصة ألعاب الذكاء الرقمي</title>
+    <title>Almaz Glass Casino</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1877237202544525" crossorigin="anonymous"></script>
-
     <style>
-        body { background-color: #0f172a; font-family: 'Segoe UI', system-ui, sans-serif; }
-        .glass-card {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
+        .glass-panel { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.1); }
+        @keyframes roll { 0% { transform: translateY(0); } 50% { transform: translateY(-100%); } 51% { transform: translateY(100%); } 100% { transform: translateY(0); } }
+        .rolling { animation: roll 0.2s linear infinite; }
+        .box { background: rgba(0, 0, 0, 0.3); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold; border-radius: 1rem; border: 1px solid rgba(255,255,255,0.1); height: 70px; overflow: hidden; }
+        .target-box { border-color: #f59e0b; color: #f59e0b; }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center py-12 px-4">
+<body class="bg-slate-950 min-h-screen flex flex-col items-center p-4">
 
-    <div class="glass-card p-8 rounded-3xl shadow-2xl w-full max-w-md text-center">
-        <h1 class="text-3xl font-extrabold text-white mb-2">Almaz Game</h1>
-        <p class="text-indigo-400 text-sm mb-8">استخدم ذكاءك لمطابقة الأرقام</p>
-        
-        <div class="grid grid-cols-4 gap-3 mb-10">
-            <div id="slot1" class="p-5 border-2 border-orange-500 rounded-2xl text-2xl font-bold text-orange-500 bg-orange-500/10">?</div>
-            <div id="slot2" class="p-5 border-2 border-orange-500 rounded-2xl text-2xl font-bold text-orange-500 bg-orange-500/10">?</div>
-            <div id="slot3" class="p-5 border-2 border-orange-500 rounded-2xl text-2xl font-bold text-orange-500 bg-orange-500/10">?</div>
-            <div id="slot4" class="p-5 border-2 border-orange-500 rounded-2xl text-2xl font-bold text-orange-500 bg-orange-500/10">?</div>
+    <div class="glass-panel w-full max-w-md p-6 rounded-3xl shadow-2xl text-white mt-10">
+        <div class="flex justify-between items-center mb-6">
+            <button onclick="toggleLang()" class="bg-white/10 px-3 py-1 rounded-lg text-xs hover:bg-white/20 transition">EN / AR</button>
+            <div id="balance" class="text-yellow-400 font-bold text-lg">0 💎 ($0.00)</div>
         </div>
-
-        <button onclick="startSpin()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-5 rounded-2xl transition-all shadow-lg active:scale-95 text-xl">
-            ابدأ الدوران الآن
-        </button>
+        <h2 id="target-title" class="text-slate-400 text-xs uppercase tracking-widest mb-2 text-center">الأرقام المطلوبة</h2>
+        <div class="grid grid-cols-4 gap-2 mb-6">
+            <div id="t-0" class="box target-box">?</div>
+            <div id="t-1" class="box target-box">?</div>
+            <div id="t-2" class="box target-box">?</div>
+            <div id="t-3" class="box target-box">?</div>
+        </div>
+        <div class="grid grid-cols-4 gap-2 mb-6">
+            <div id="b-0" class="box">0</div>
+            <div id="b-1" class="box">0</div>
+            <div id="b-2" class="box">0</div>
+            <div id="b-3" class="box">0</div>
+        </div>
+        <div id="msg" class="text-center font-bold mb-4 h-6 text-sm"></div>
+        <button id="spinBtn" class="w-full bg-indigo-600 hover:bg-indigo-500 py-3 rounded-xl font-bold transition-all active:scale-95 shadow-lg">ابدأ الدوران</button>
     </div>
 
-    <div class="w-full max-w-2xl mt-10">
+    <div class="mt-8 w-full max-w-md text-center">
+        <p class="text-slate-600 text-[10px] mb-2">ADVERTISEMENT</p>
         <ins class="adsbygoogle"
              style="display:block"
              data-ad-client="ca-pub-1877237202544525"
@@ -45,38 +49,70 @@
         <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
     </div>
 
-    <div class="max-w-2xl mt-12 p-10 text-slate-300 text-right leading-relaxed glass-card rounded-3xl mx-auto mb-16">
-        <h2 class="text-2xl font-bold text-white mb-6 border-b border-white/10 pb-2">عن مشروع Almaz</h2>
-        <p class="mb-6 text-lg">
-            منصة <strong>Almaz</strong> هي مشروع تطويري يهدف إلى تقديم تجربة ألعاب تفاعلية تعتمد على متصفح الويب. تم بناء هذه المنصة باستخدام تقنيات حديثة لدمج واجهات المستخدم الجذابة مع البرمجة السحابية، مما يوفر بيئة ترفيهية ذكية.
+    <div class="max-w-md mt-10 p-6 glass-panel rounded-2xl text-slate-400 text-sm text-right leading-relaxed mb-10">
+        <h3 class="text-white font-bold mb-2">عن منصة Almaz Glass Casino</h3>
+        <p class="mb-4">
+            نقدم لكم تجربة فريدة في عالم الألعاب الرقمية. تعتمد لعبتنا على خوارزميات متطورة لتوليد الأرقام العشوائية لضمان النزاهة والترفيه. نحن نستخدم تقنيات الويب الحديثة لتوفير واجهة مستخدم سلسة.
         </p>
-        
-        <h3 class="text-xl font-semibold text-indigo-400 mb-4">آلية التحدي</h3>
-        <p class="mb-6">
-            تعتمد اللعبة على خوارزميات توليد الأرقام العشوائية في كل دورة. يتوجب على المستخدم مطابقة الأرقام الظاهرة للحصول على أعلى رصيد ممكن من الألماس الافتراضي، مما ينمي مهارات الملاحظة والتركيز.
+        <h3 class="text-white font-bold mb-2">سياسة الخصوصية والاستخدام</h3>
+        <p class="text-xs">
+            نحن نحترم خصوصيتك. يتم عرض الإعلانات بواسطة Google AdSense بناءً على اهتماماتك. يمكنك التواصل معنا عبر البريد الإلكتروني لأي استفسارات تقنية بخصوص محرك Almaz.
         </p>
-
-        <h3 class="text-xl font-semibold text-indigo-400 mb-4">الجودة والخصوصية</h3>
-        <p>
-            نحن نلتزم بتقديم محتوى آمن ومفيد. نستخدم ملفات تعريف الارتباط لتحسين تجربة المستخدم وعرض إعلانات ملائمة عبر AdSense. نسعى دائماً لتطوير محرك Almaz ليتضمن تقنيات ثلاثية الأبعاد (3D) في المستقبل.
-        </p>
+        <div class="flex justify-center gap-4 mt-4 border-t border-white/10 pt-4">
+            <a href="#" class="hover:text-white">من نحن</a>
+            <a href="#" class="hover:text-white">اتصل بنا</a>
+            <a href="#" class="hover:text-white">سياسة الخصوصية</a>
+        </div>
     </div>
 
-    <footer class="mt-auto py-12 text-slate-500 text-sm border-t border-white/5 w-full">
-        <div class="flex gap-8 justify-center mb-6">
-            <a href="#" class="hover:text-white transition">سياسة الخصوصية</a>
-            <a href="#" class="hover:text-white transition">اتصل بنا</a>
-            <a href="#" class="hover:text-white transition">من نحن</a>
-        </div>
-        <p class="text-center">© 2026 Almaz. جميع الحقوق محفوظة.</p>
-    </footer>
-
     <script>
-        function startSpin() {
-            for(let i=1; i<=4; i++) {
-                document.getElementById('slot' + i).innerText = Math.floor(Math.random() * 10);
-            }
+        const audio = {
+            bg: new Audio('sounds/bg-music.mp3'),
+            spin: new Audio('sounds/spin-roll.mp3'),
+            win: new Audio('sounds/win-jingle.mp3'),
+            lose: new Audio('sounds/lose-buzzer.mp3'),
+            coins: new Audio('sounds/coins-add.mp3'),
+            click: new Audio('sounds/ui-click.mp3')
+        };
+        const state = { jewels: 0, losses: 0, lang: 'ar', isSpinning: false };
+
+        function toggleLang() {
+            state.lang = state.lang === 'ar' ? 'en' : 'ar';
+            document.getElementById('htmlTag').dir = state.lang === 'ar' ? 'rtl' : 'ltr';
+            document.getElementById('spinBtn').innerText = state.lang === 'ar' ? 'ابدأ الدوران' : 'Start Spin';
+            document.getElementById('target-title').innerText = state.lang === 'ar' ? 'الأرقام المطلوبة' : 'Target Numbers';
         }
+
+        async function startSpin() {
+            if (state.isSpinning) return;
+            state.isSpinning = true;
+            document.getElementById('spinBtn').disabled = true;
+            document.getElementById('msg').innerText = "";
+            const target = Array.from({length: 4}, () => Math.floor(Math.random() * 9));
+            target.forEach((n, i) => document.getElementById(`t-${i}`).innerText = n);
+            const boxes = [0,1,2,3].map(i => document.getElementById(`b-${i}`));
+            boxes.forEach(b => b.classList.add('rolling'));
+            
+            await new Promise(r => setTimeout(r, 2000));
+            
+            state.losses++;
+            const isWin = (state.losses >= 3) ? (state.losses = 0, true) : (Math.random() < 0.25);
+            boxes.forEach((b, i) => {
+                b.classList.remove('rolling');
+                b.innerText = isWin ? target[i] : Math.floor(Math.random() * 9);
+                b.style.borderColor = isWin ? '#22c55e' : '#ef4444';
+            });
+            if (isWin) {
+                state.jewels++;
+                document.getElementById('balance').innerText = `${state.jewels} 💎 ($${(state.jewels * 0.05).toFixed(2)})`;
+                document.getElementById('msg').innerText = state.lang === 'ar' ? "🎉 مبروك!" : "🎉 You Won!";
+            } else {
+                document.getElementById('msg').innerText = state.lang === 'ar' ? "❌ خسرت" : "❌ You Lost";
+            }
+            state.isSpinning = false;
+            document.getElementById('spinBtn').disabled = false;
+        }
+        document.getElementById('spinBtn').addEventListener('click', startSpin);
     </script>
 </body>
 </html>
